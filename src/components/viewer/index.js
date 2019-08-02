@@ -1,16 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '../button'
+import './styles.scss'
 
 export const Viewer = () => {
+
+	useEffect(() => {
+		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+			.then(stream => {
+				const video = document.getElementById('video')
+				video.srcObject = stream
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	})
+
 	return (
 		<div className="viewer">
 			<div className="viewer__inner">
-				<img src="https://via.placeholder.com/700x500?text=Web+Camera"
-					 alt="img"/>
+				<video id="video" autoPlay> </video>
 			</div>
-			<Button text="run"/>
-			<Button text="settings"/>
+			<div className="viewer__footer">
+				<Button text="run"/>
+				<Button text="set"/>
+			</div>
 		</div>
 	)
 }
-

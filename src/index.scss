@@ -12,8 +12,16 @@ code {
     monospace;
 }
 
+video {
+  background: #222;
+  margin: 0 0 20px 0;
+  --width: 100%;
+  width: var(--width);
+  height: calc(var(--width) * 0.75);
+}
+
 .container-fluid {
-  width: 900px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 15px 0;
 }
