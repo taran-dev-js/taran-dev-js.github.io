@@ -3,12 +3,12 @@ import { Button } from '../button'
 import './styles.scss'
 
 export const Viewer = () => {
+	const video = React.createRef()
 
 	useEffect(() => {
 		navigator.mediaDevices.getUserMedia({ audio: true, video: true })
 			.then(stream => {
-				const video = document.getElementById('video')
-				video.srcObject = stream
+				video.current.srcObject = stream
 			})
 			.catch(err => {
 				console.log(err)
@@ -18,7 +18,7 @@ export const Viewer = () => {
 	return (
 		<div className="viewer">
 			<div className="viewer__inner">
-				<video id="video" autoPlay> </video>
+				<video ref={video} id="video" autoPlay> </video>
 			</div>
 			<div className="viewer__footer">
 				<Button text="run"/>
