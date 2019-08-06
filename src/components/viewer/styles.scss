@@ -1,4 +1,20 @@
+.viewer__inner {
+  position: relative;
+  width: 600px;
+  height: 600px;
+  canvas, video {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
 .viewer__footer {
   display: flex;
   justify-content: space-between;
+}
+
+img {
+  //width: 800px;
+  //height: 800px;
 }
