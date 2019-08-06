@@ -8,7 +8,6 @@ export const Viewer = () => {
 	const canvasRef = React.createRef()
 
 	useEffect(() => {
-		const img = document.getElementById('img');
 
 		cocoSsd.load().then(model => {
 			if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
