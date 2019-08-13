@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.0.0/dist/tf.min.js"></script>
+</head>
+<body>
+
+<script>
+    const mod = './model/model.json'
+	const load = async () => {
+		const model = await tf.loadGraphModel(mod)
+		console.log(model)
+	}
+	load()
+</script>
+</body>
+</html>
