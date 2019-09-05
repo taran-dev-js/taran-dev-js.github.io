@@ -1,9 +1,11 @@
 import React from 'react'
 
-export const Header = ({ count }) => {
+export const Header = ({count}) => {
 	return (
-		<header className="header">
-			<h1 className="header__title">Count of people: {count}</h1>
+		<header>
+			<div className="container-fluid">
+				<p>find people: {count}</p>
+			</div>
 		</header>
 	)
 }
