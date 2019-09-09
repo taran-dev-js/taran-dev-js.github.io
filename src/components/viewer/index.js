@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import * as cocoSsd from '@tensorflow-models/coco-ssd'
+import * as Stats from 'stats.js'
 import { Header } from '../header'
 import { Canvas } from '../canvas'
 
@@ -25,9 +26,14 @@ export const Viewer = () => {
 					});
 				});
 			const modelPromise = cocoSsd.load({modelUrl: 'http://127.0.0.1:8080/model/model.json'});
+
 			Promise.all([modelPromise, webCamPromise])
 				.then(values => {
-					detectFrame(videoRef.current, values[0]);
+					const stats = new Stats();
+					stats.showPanel(0);
+					document.body.appendChild( stats.dom );
+
+					detectFrame(videoRef.current, values[0], stats);
 				})
 				.catch(error => {
 					console.error(error);
@@ -35,7 +41,9 @@ export const Viewer = () => {
 		}
 	}, [])
 
-	const detectFrame = (video, model) => {
+	const detectFrame = (video, model, stats) => {
+		stats.begin();
+
 		model.detect(video).then(predictions => {
 			const personPrediction = mapPerson(predictions)
 
@@ -44,9 +52,12 @@ export const Viewer = () => {
 				renderPredictions(personPrediction);
 			}
 			requestAnimationFrame(() => {
-				detectFrame(video, model);
+				detectFrame(video, model, stats);
 			});
+
 		});
+
+		stats.end();
 	};
 
 	const mapPerson = prediction =>  prediction.filter(item => item.class === 'person')
@@ -84,10 +95,10 @@ export const Viewer = () => {
 	};
 
 	return (
-		<div>
+		<div className="container-fluid">
 			<Header count={count}/>
 			<div className="viewer">
-				<video ref={videoRef} id="video" width="300" height="300" autoPlay> </video>
+				<video ref={videoRef} id="video" width="600" height="460" autoPlay> </video>
 				<Canvas canvasRef={canvasRef}/>
 			</div>
 		</div>

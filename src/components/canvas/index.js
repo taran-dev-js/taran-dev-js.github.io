@@ -9,7 +9,7 @@ export class Canvas extends Component {
 		const {canvasRef} = this.props;
 		console.log('canvas update')
 		return (
-			<canvas ref={canvasRef} id="canvas" width="300" height="300"> </canvas>
+			<canvas ref={canvasRef} id="canvas" width="600" height="460"> </canvas>
 		)
 	}
 }

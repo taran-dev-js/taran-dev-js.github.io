@@ -12,13 +12,19 @@ code {
     monospace;
 }
 
-.viewer {
-  position: relative;
-  width: 300px;
-  height: 300px;
+.container-fluid {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 0 10px;
 }
 
-video, canvas {
+.viewer {
+  position: relative;
+  width: 600px;
+  height: 460px;
+}
+
+.viewer video, .viewer canvas {
   position: absolute;
   left: 0;
   bottom: 0;
