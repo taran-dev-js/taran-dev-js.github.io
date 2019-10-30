@@ -12,16 +12,28 @@ code {
     monospace;
 }
 
+p {
+  margin: 0;
+}
+
+header {
+  padding: 10px 0;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+}
+
 .container-fluid {
-  max-width: 600px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 0 10px;
 }
 
 .viewer {
   position: relative;
-  width: 600px;
-  height: 460px;
+  height: 600px;
+  margin: auto;
 }
 
 .viewer video, .viewer canvas {

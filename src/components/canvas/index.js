@@ -6,10 +6,10 @@ export class Canvas extends Component {
 	}
 
 	render () {
-		const {canvasRef} = this.props;
+		const {canvasRef, width, height} = this.props;
 		console.log('canvas update')
 		return (
-			<canvas ref={canvasRef} id="canvas" width="600" height="460"> </canvas>
+			<canvas ref={canvasRef} id="canvas" width={width} height={height}> </canvas>
 		)
 	}
 }
