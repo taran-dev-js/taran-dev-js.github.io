@@ -4,20 +4,28 @@ import * as cocoSsd from '@tensorflow-models/coco-ssd'
 import { Header } from '../header'
 import { Canvas } from '../canvas'
 import {renderPredictions} from './renderPredictions'
+import { ReactComponent  as SettingIcon } from '../../assets/gear.svg'
+import { ReactComponent  as SaveIcon } from '../../assets/floppy-disk.svg'
+import './style.scss'
 
 export const Viewer = () => {
 	const videoRef = React.createRef();
 	const canvasRef = React.createRef();
 	const viewerRef = React.createRef();
 	const [count, setCount] = useState(0);
+	const videoConfig = {
+		audio: false,
+		video: {
+			facingMode: "environment",
+			width: 720,
+			height: 1280
+		}
+	}
 
 	useEffect(() => {
 		if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
 			const webCamPromise = navigator.mediaDevices
-				.getUserMedia({
-					audio: false,
-					video: { facingMode: "environment" }
-				})
+				.getUserMedia(videoConfig)
 				.then(stream => {
 					window.stream = stream;
 					videoRef.current.srcObject = stream;
@@ -32,7 +40,7 @@ export const Viewer = () => {
 			Promise.all([modelPromise, webCamPromise])
 				.then(values => {
 
-					detectFrame(videoRef.current, values[0]);
+					// detectFrame(videoRef.current, values[0]);
 				})
 				.catch(error => {
 					console.error(error);
@@ -59,16 +67,16 @@ export const Viewer = () => {
 
 	const mapPerson = prediction =>  prediction.filter(item => item.class === 'person')
 
-	const windowWidth = () => window.innerWidth - 20
-
-	const styles = {width: windowWidth()}
-
 	return (
 		<div className="container-fluid">
 			<Header count={count}/>
-			<div className="viewer" style={styles}>
-				<video ref={videoRef} id="video" width={windowWidth()} height="700" autoPlay> </video>
-				<Canvas canvasRef={canvasRef} width={windowWidth()} height="700"/>
+			<div className="viewer">
+				<video ref={videoRef} id="video" width={videoConfig.video.width/2} height={videoConfig.video.height/2} autoPlay> </video>
+				<Canvas canvasRef={canvasRef}  width={videoConfig.video.width/2} height={videoConfig.video.height/2} />
+			</div>
+			<div className="btn-container">
+				<button className="btn-blue"><SettingIcon width={18} height={18} fill="#fff"/></button>
+				<button className="btn-blue"><SaveIcon width={18} height={18} fill="#fff"/></button>
 			</div>
 		</div>
 	)
