@@ -40,7 +40,7 @@ export const Viewer = () => {
 			Promise.all([modelPromise, webCamPromise])
 				.then(values => {
 
-					// detectFrame(videoRef.current, values[0]);
+					detectFrame(videoRef.current, values[0]);
 				})
 				.catch(error => {
 					console.error(error);
