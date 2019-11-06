@@ -29,17 +29,3 @@ header {
   margin: 0 auto;
   padding: 0 10px;
 }
-
-.viewer {
-  position: relative;
-  width: 100%;
-  height: 640px;
-  margin: auto;
-}
-
-.viewer video, .viewer canvas {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-}
