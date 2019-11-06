@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 
 export class Canvas extends Component {
 	shouldComponentUpdate (nextProps, nextState, nextContext) {
-		return false
+		const {width, height} = this.props;
+		return !(nextProps.width === width && nextProps.height === height)
 	}
 
 	render () {
