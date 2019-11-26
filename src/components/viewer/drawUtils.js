@@ -13,12 +13,7 @@ const drawSegment = ([ay, ax], [by, bx], color, scale, ctx) => {
 	ctx.stroke();
 }
 const drawSkeleton = (keypoints, minConfidence, ctx, scale = 1, color) => {
-<<<<<<< Updated upstream
-	const adjacentKeyPoints =
-		posenet.getAdjacentKeyPoints(keypoints, minConfidence);
-=======
 	const adjacentKeyPoints = posenet.getAdjacentKeyPoints(keypoints, minConfidence);
->>>>>>> Stashed changes
 
 	adjacentKeyPoints.forEach((keypoints) => {
 		drawSegment(
@@ -87,8 +82,4 @@ const renderPredictions = (predictions, color, canvas)=> {
 	});
 }
 
-<<<<<<< Updated upstream
 export {drawKeypoints, drawSkeleton, dist, findAngle, renderPredictions}
-=======
-export {drawKeypoints, drawSkeleton, dist, findAngle, renderPredictions}
->>>>>>> Stashed changes

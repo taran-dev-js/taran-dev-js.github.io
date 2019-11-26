@@ -1,0 +1,18 @@
+body, * {
+  margin: 0;
+  padding: 0;
+}
+
+header {
+  padding: 10px 0;
+  margin-top: 30px;
+  margin-bottom: 40px;
+  font-size: 18px;
+  border-bottom: 1px solid #eee;
+}
+
+.container-fluid {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}

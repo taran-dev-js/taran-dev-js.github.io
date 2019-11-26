@@ -77,8 +77,4 @@ export const handDetection = (keyPoints, height, width) => {
 	}
 
 	return false;
-<<<<<<< Updated upstream
 }
-=======
-}
->>>>>>> Stashed changes

@@ -4,8 +4,8 @@ import * as posenet from '@tensorflow-models/posenet'
 import { Header } from '../header'
 import { Canvas } from '../canvas'
 import { renderPredictions } from './renderPredictions'
-import { handDetection } from './handDetection'
-import { drawKeypoints, drawSkeleton } from './drawUtils'
+// import { handDetection } from './handDetection'
+// import { drawKeypoints, drawSkeleton } from './drawUtils'
 import { ReactComponent as SettingIcon } from '../../assets/gear.svg'
 import { ReactComponent as SaveIcon } from '../../assets/floppy-disk.svg'
 import WebCam from 'react-webcam'
@@ -16,6 +16,7 @@ export const Viewer = () => {
 	const webcamRef = React.useRef(null);
 	const [count, setCount] = useState(0);
 	const [loader, setLoader] = useState(false);
+
 	const videoConfig = {
 		height: 720,
 		width: 420
@@ -36,8 +37,7 @@ export const Viewer = () => {
 			Promise.all([modelPromise, poseNetLoad ])
 				.then(values => {
 					setLoader(false)
-					// detectFrame(webcamRef.current.video, values[0]);
-					startPoseNet(webcamRef.current.video, values[1])
+					detectFrame(webcamRef.current.video, values[0]);
 				})
 				.catch(error => {
 					console.error(error);
@@ -45,64 +45,62 @@ export const Viewer = () => {
 		}
 	}
 
-	const canvasVideo = () => {
-		// console.log(webcamRef.current.video.clientWidth);
-	}
+	const canvasVideo = () => {}
 
 	useEffect(() => {
 		startVideo()
 	}, [])
 
-	const startPoseNet = (video, net) => {
-
-		const width = webcamRef.current.video.clientWidth
-		const height = webcamRef.current.video.clientHeight
-		const canvas = canvasRef.current
-		const ctx = canvas.getContext('2d')
-		canvas.width = width
-		canvas.height = height
-
-		async function poseDetectionFrame () {
-			let color = '#30ee08'
-			let poses = []
-			let minPoseConfidence
-			let minPartConfidence
-			let all_poses = await net.estimateMultiplePoses(video, {
-				flipHorizontal: false,
-				decodingMethod: 'multi-person',
-				maxDetections: 3,
-				scoreThreshold: 0.6,
-			})
-
-			poses = poses.concat(all_poses)
-			minPoseConfidence = 0.15
-			minPartConfidence = 0.1
-			// console.log(poses)
-			ctx.clearRect(0, 0, width, height)
-			ctx.save()
-			ctx.scale(-1, 1)
-			ctx.drawImage(video, 0, 0, width, height)
-			ctx.restore()
-			poses.forEach(({ score, keypoints }) => {
-				if (score >= minPoseConfidence) {
-					if (!keypoints.slice(5, 11).every(x => x.score > minPartConfidence)) {
-						return
-					}
-					const handTrigger = handDetection(keypoints, height, width)
-					// if (handTrigger) alert(handTrigger)
-					color = handTrigger ? '#eeee33' : '#477eff';
-					drawSkeleton(keypoints, minPartConfidence, ctx, 1, color)
-					drawKeypoints(keypoints, minPartConfidence, ctx, 1, color)
-				}
-			})
-
-			// detectFrame(webcamRef.current., cocossd, color);
-
-			requestAnimationFrame(poseDetectionFrame)
-		}
-
-		poseDetectionFrame()
-	}
+	// const startPoseNet = (video, net) => {
+	//
+	// 	const width = webcamRef.current.video.clientWidth
+	// 	const height = webcamRef.current.video.clientHeight
+	// 	const canvas = canvasRef.current
+	// 	const ctx = canvas.getContext('2d')
+	// 	canvas.width = width
+	// 	canvas.height = height
+	//
+	// 	async function poseDetectionFrame () {
+	// 		let color = '#30ee08'
+	// 		let poses = []
+	// 		let minPoseConfidence
+	// 		let minPartConfidence
+	// 		let all_poses = await net.estimateMultiplePoses(video, {
+	// 			flipHorizontal: false,
+	// 			decodingMethod: 'multi-person',
+	// 			maxDetections: 3,
+	// 			scoreThreshold: 0.6,
+	// 		})
+	//
+	// 		poses = poses.concat(all_poses)
+	// 		minPoseConfidence = 0.15
+	// 		minPartConfidence = 0.1
+	// 		// console.log(poses)
+	// 		ctx.clearRect(0, 0, width, height)
+	// 		ctx.save()
+	// 		ctx.scale(-1, 1)
+	// 		ctx.drawImage(video, 0, 0, width, height)
+	// 		ctx.restore()
+	// 		poses.forEach(({ score, keypoints }) => {
+	// 			if (score >= minPoseConfidence) {
+	// 				if (!keypoints.slice(5, 11).every(x => x.score > minPartConfidence)) {
+	// 					return
+	// 				}
+	// 				const handTrigger = handDetection(keypoints, height, width)
+	// 				// if (handTrigger) alert(handTrigger)
+	// 				color = handTrigger ? '#eeee33' : '#477eff';
+	// 				drawSkeleton(keypoints, minPartConfidence, ctx, 1, color)
+	// 				drawKeypoints(keypoints, minPartConfidence, ctx, 1, color)
+	// 			}
+	// 		})
+	//
+	// 		// detectFrame(webcamRef.current., cocossd, color);
+	//
+	// 		requestAnimationFrame(poseDetectionFrame)
+	// 	}
+	//
+	// 	poseDetectionFrame()
+	// }
 
 	const detectFrame = (video, model) => {
 		model.detect(video).then(predictions => {
