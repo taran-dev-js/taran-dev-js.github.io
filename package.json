@@ -2,7 +2,7 @@
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://taran-dev-js.github.io",
+  "homepage": "https://taran-dev-js.github.io/",
   "dependencies": {
     "@tensorflow-models/coco-ssd": "^2.0.0",
     "@tensorflow/tfjs": "^1.2.8",
